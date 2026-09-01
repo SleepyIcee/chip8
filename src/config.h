@@ -1,0 +1,6 @@
+#pragma once
+
+#define MEMORY_SIZE 4096
+#define ROM_START_ADDRESS 0x200
+#define SCREEN_WIDTH 64
+#define SCREEN_HEIGHT 32

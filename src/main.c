@@ -16,15 +16,12 @@ int main(int argc, char *argv[]) {
     }
 
     Chip8 chip8;
-    const float updateSpeed = 1.0f; // 60Hz in seconds
-    float updateTimer = updateSpeed;
 
     chip8_setup(&chip8);
     chip8_load_game(&chip8, argv[1]);
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
-        float frameTime = GetFrameTime();
 
         if (chip8.runFlag) {
             chip8_update(&chip8);
@@ -33,6 +30,10 @@ int main(int argc, char *argv[]) {
         if (chip8.drawFlag) {
             display_draw(chip8.gfx);
             chip8.drawFlag = false;
+        }
+
+        if (IsKeyPressed(KEY_ESCAPE)) {
+            CloseWindow();
         }
 
         chip8_set_keys(&chip8);

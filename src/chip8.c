@@ -81,6 +81,7 @@ void excute_opcodes(Chip8 *chip8, uint16_t opcode) {
                 case 0x00E0: // Clears the screen
                     chip8_clear_display(chip8);
                     chip8->drawFlag = true;
+                    chip8->pc += 2;
                 break;
                 
                 case 0x00EE: // Return from a subroutine
@@ -451,6 +452,8 @@ void excute_opcodes(Chip8 *chip8, uint16_t opcode) {
             printf("unknown opcode : %X\n", opcode);
         break;
     }
+
+    printf("excuting opcode >> %X\n", opcode);
 }
 
 void chip8_update(Chip8 *chip8) {
@@ -476,56 +479,29 @@ void chip8_update(Chip8 *chip8) {
 }
 
 void chip8_set_keys(Chip8 *chip8) {
-    switch (GetKeyPressed()) {
-        case KEY_ONE:
-            chip8->keys[0x1] = true;
-        break;
-        case KEY_TWO:
-            chip8->keys[0x2] = true;
-        break;
-        case KEY_THREE:
-            chip8->keys[0x3] = true;
-        break;
-        case KEY_FOUR:
-            chip8->keys[0xC] = true;
-        break;
-        case KEY_Q:
-            chip8->keys[0x4] = true;
-        break;
-        case KEY_W:
-            chip8->keys[0x5] = true;
-        break;
-        case KEY_E:
-            chip8->keys[0x6] = true;
-        break;
-        case KEY_R:
-            chip8->keys[0xD] = true;
-        break;
-        case KEY_A:
-            chip8->keys[0x7] = true;
-        break;
-        case KEY_S:
-            chip8->keys[0x8] = true;
-        break;
-        case KEY_D:
-            chip8->keys[0x9] = true;
-        break;
-        case KEY_F:
-            chip8->keys[0xE] = true;
-        break;
-        case KEY_Z:
-            chip8->keys[0xA] = true;
-        break;
-        case KEY_X:
-            chip8->keys[0x0] = true;
-        break;
-        case KEY_C:
-            chip8->keys[0xB] = true;
-        break;
-        case KEY_V:
-            chip8->keys[0xF] = true;
-        break;
+    for (int i = 0; i < 16; i++) {
+        chip8->keys[i] = false;
     }
+
+    if (IsKeyDown(KEY_ONE)) chip8->keys[0x1] = true;
+    if (IsKeyDown(KEY_TWO)) chip8->keys[0x2] = true;
+    if (IsKeyDown(KEY_THREE)) chip8->keys[0x3] = true;
+    if (IsKeyDown(KEY_FOUR)) chip8->keys[0xC] = true;
+
+    if (IsKeyDown(KEY_Q)) chip8->keys[0x4] = true;
+    if (IsKeyDown(KEY_W)) chip8->keys[0x5] = true;
+    if (IsKeyDown(KEY_E)) chip8->keys[0x6] = true;
+    if (IsKeyDown(KEY_R)) chip8->keys[0xD] = true;
+
+    if (IsKeyDown(KEY_A)) chip8->keys[0x7] = true;
+    if (IsKeyDown(KEY_S)) chip8->keys[0x8] = true;
+    if (IsKeyDown(KEY_D)) chip8->keys[0x9] = true;
+    if (IsKeyDown(KEY_F)) chip8->keys[0xE] = true;
+
+    if (IsKeyDown(KEY_Z)) chip8->keys[0xA] = true;
+    if (IsKeyDown(KEY_X)) chip8->keys[0x0] = true;
+    if (IsKeyDown(KEY_C)) chip8->keys[0xB] = true;
+    if (IsKeyDown(KEY_V)) chip8->keys[0xF] = true;
 }
 
 void chip8_clear_display(Chip8* chip8) {
